@@ -1,0 +1,4 @@
+Description
+A simple web apllication which gets licenses list from a specified server and prints this list on a web page.
+
+Used technologies: html, javascript and AJAX.
