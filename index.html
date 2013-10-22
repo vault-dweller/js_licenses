@@ -30,14 +30,10 @@ function sort(data, order) {
 	
 	for (i = 0; i < lic.length; i++) {
 		for (j = i; j < lic.length; j++) {
-			if (lic[i].licensedApp < lic[j].licensedApp && order == "descending") {
-				obj1 = i, obj2 = j;
-			} else if (lic[i].licensedApp > lic[j].licensedApp && order == "ascending") {
-				obj1 = j, obj2 = i;
-			} else continue;
-			
-			for (var prop in props) {
-				switchObjects(lic, obj1, obj2, prop);
+			if ((lic[i].licensedApp > lic[j].licensedApp && order == "descending") || (lic[i].licensedApp < lic[j].licensedApp && order == "ascending")) {
+				for (var prop in props) {
+					switchObjects(lic, i, j, prop);
+				}
 			}
 		}
 	}
