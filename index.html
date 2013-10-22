@@ -5,10 +5,10 @@
 var json = "";
 var data = "";
 
-function switchObjects(obj, i, j, prop) {
-	var tmp = obj[i][prop];
-	obj[i][prop] = obj[j][prop];
-	obj[j][prop] = tmp;
+function switchObjects(licenses, obj1, obj2, prop) {
+	var tmp = licenses[obj1][prop];
+	licenses[obj1][prop] = licenses[obj2][prop];
+	licenses[obj2][prop] = tmp;
 }
 
 function descBtnHandler() {
@@ -26,32 +26,20 @@ function ascBtnHandler() {
 function sort(data, order) {
 	var props = {licensedApp:true, version:true, expiredDate:true, hostId:true};
 	var lic = data.licenses;
-	switch(order) {
-		case "descending": {
-			for (i = 0; i < lic.length; i++) {
-				for (j = i; j < lic.length; j++) {
-					if (lic[i].licensedApp < lic[j].licensedApp) {
-						for (var prop in props) {
-							switchObjects(lic, i, j, prop);
-						}
-					}					
-				}
+	var obj1, obj2;
+	
+	for (i = 0; i < lic.length; i++) {
+		for (j = i; j < lic.length; j++) {
+			if (lic[i].licensedApp < lic[j].licensedApp && order == "descending") {
+				obj1 = i, obj2 = j;
+			} else if (lic[i].licensedApp > lic[j].licensedApp && order == "ascending") {
+				obj1 = j, obj2 = i;
+			} else continue;
+			
+			for (var prop in props) {
+				switchObjects(lic, obj1, obj2, prop);
 			}
-			break;
 		}
-		case "ascending": {
-			for (i = 0; i < lic.length; i++) {
-				for (j = i; j < lic.length; j++) {
-					if (lic[i].licensedApp > lic[j].licensedApp) {
-						for (var prop in props) {
-							switchObjects(lic, i, j, prop);
-						}
-					}					
-				}
-			}
-			break;
-		}
-		default: break;
 	}
 }
 
